@@ -1,4 +1,4 @@
-const { createCipheriv } = require('crypto');
+const { createCipheriv, createDecipheriv } = require('crypto');
 
 class CryptoHelper {
   constructor({ cryptoKey }) {
@@ -17,10 +17,12 @@ class CryptoHelper {
 
   async encrypt(data) {
     const cipher = createCipheriv(...this.cryptoConfig);
-    return cipher
-      .update(data, 'utf8', 'base64')
-      .concat(cipher.final('base64'));
+    return cipher.update(data, 'utf8', 'base64').concat(cipher.final('base64'));
+  }
+
+  async decrypted(data) {
+    const cipher = createDecipheriv(...this.cryptoConfig);
+    return cipher.update(data, 'base64', 'utf8').concat(cipher.final('utf8'));
   }
 }
-
-modules.exports = { CryptoHelper };
+module.exports = CryptoHelper;
