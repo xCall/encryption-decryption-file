@@ -1,14 +1,14 @@
 const CryptoHelper = require('./src/cryptoHelper');
 const app = require('./src/app');
+const CustomFSPromises = require('./src/customFSPromisses');
+const Decorator = require('./src/decorator');
 
 ;(async () => {
   const config = {
     cryptoKey: 'minha-senha-super-segura',
   };
   const cryptoHelper = await CryptoHelper.setup(config);
-  const result = await cryptoHelper.encrypt('Hello world');
-  const decrypted = await cryptoHelper.decrypted(result);
-  console.log('mensagem criptografada',result);
-  console.log('mensagem descriptografada',decrypted);
+  const customFSPromisses = new CustomFSPromises({cryptoHelper}).configure();
+  Decorator.decorateModule(customFSPromisses, require('fs').promises);
   await app.run();
 })();

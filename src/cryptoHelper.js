@@ -12,7 +12,7 @@ class CryptoHelper {
   }
 
   static async setup({ cryptoKey }) {
-    return new CryptoHelper({ cryptoKey });
+  return new CryptoHelper({ cryptoKey });
   }
 
   async encrypt(data) {
@@ -22,7 +22,7 @@ class CryptoHelper {
 
   async decrypted(data) {
     const cipher = createDecipheriv(...this.cryptoConfig);
-    return cipher.update(data, 'base64', 'utf8').concat(cipher.final('utf8'));
+    return cipher.update(data.toString(), 'base64', 'utf8').concat(cipher.final('utf8'));
   }
 }
 module.exports = CryptoHelper;
